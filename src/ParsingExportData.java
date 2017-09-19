@@ -15,12 +15,47 @@ public class ParsingExportData {
 		}
 		return "NOT FOUND";
 	}
+	public void listExportersTwoProducts(CSVParser parser, String exportItem1, String exportItem2)
+	{
+		for(CSVRecord record : parser)
+		{
+			String exports = record.get("Exports");
+			
+			if(exports.contains(exportItem1) && exports.contains(exportItem2))
+			{
+				String currentCountry = record.get("Country");
+				System.out.println(currentCountry);
+			}
+		}
+	}
+	public int numberOfExporters(CSVParser parser, String exportItem)
+	{
+		int count = 0;
+		for(CSVRecord record : parser)
+		{
+			String exports = record.get("Exports");
+			
+			if(exports.contains(exportItem))
+			{
+				count++;
+			}
+		}
+		return count;
+	}
 	public void tester()
 	{
 		FileResource fr = new FileResource();
+		
 		CSVParser parser = fr.getCSVParser();
 		String result = countryInfo(parser, "Peru");
 		System.out.println(result);
+		
+		parser = fr.getCSVParser();
+		listExportersTwoProducts(parser, "gold", "diamonds");
+		
+		parser = fr.getCSVParser();
+		int count = numberOfExporters(parser, "gold");
+		System.out.println(count);
 	}
 	public static void main(String[] args)
 	{

@@ -42,6 +42,18 @@ public class ParsingExportData {
 		}
 		return count;
 	}
+	public void bigExporters(CSVParser parser, String amount)
+	{
+		for(CSVRecord record : parser)
+		{
+			String value = record.get("Value (dollars)");
+			
+			if(value.length() > amount.length())
+			{
+				System.out.println(record.get("Country") + ": " + record.get("Value (dollars)") );
+			}
+		}
+	}
 	public void tester()
 	{
 		FileResource fr = new FileResource();
@@ -56,7 +68,11 @@ public class ParsingExportData {
 		parser = fr.getCSVParser();
 		int count = numberOfExporters(parser, "gold");
 		System.out.println(count);
+		
+		parser = fr.getCSVParser();
+		bigExporters(parser, "$999,999,999");
 	}
+	
 	public static void main(String[] args)
 	{
 		ParsingExportData e = new ParsingExportData();
